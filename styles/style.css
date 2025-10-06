@@ -1,6 +1,6 @@
 @font-face {
-  font-family: jacquard;
-  src: url("../fonts/Jacquard12-Regular.ttf");
+  font-family: unifraktur-cook;
+  src: url("../fonts/UnifrakturCook-Bold.ttf");
 }
 
 * {
@@ -16,15 +16,15 @@ button {
 }
 
 body {
-  background-color: oklch(20.8% 0.042 265.755);
+  background-color: oklch(37.4% 0.01 67.558);
   height: 100vh;
 }
 
 header {
-  font-family: jacquard;
+  font-family: unifraktur-cook;
   font-weight: bold;
   font-size: 5rem;
-  color: oklch(94.5% 0.129 101.54);
+  color: oklch(87.9% 0.169 91.605);
   user-select: none;
   height: 8rem;
   display: flex;
@@ -49,5 +49,5 @@ main {
 
 .btn {
   padding: 1rem;
-  font-family: jacquard;
+  font-family: unifraktur-cook;
 }
