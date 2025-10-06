@@ -1,0 +1,53 @@
+@font-face {
+  font-family: jacquard;
+  src: url("../fonts/Jacquard12-Regular.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+body {
+  background-color: oklch(20.8% 0.042 265.755);
+  height: 100vh;
+}
+
+header {
+  font-family: jacquard;
+  font-weight: bold;
+  font-size: 5rem;
+  color: oklch(94.5% 0.129 101.54);
+  user-select: none;
+  height: 8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+main {
+  height: calc(100vh - 8rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+#table {
+  width: 320px;
+  aspect-ratio: 1 / 1;
+  background: #000;
+}
+
+.btn {
+  padding: 1rem;
+  font-family: jacquard;
+}
