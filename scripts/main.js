@@ -8,16 +8,17 @@ function isLightCell(row, col) {
 }
 
 // Render the board
-for (let row = 0; row < size; row++) {
-  const rowDiv = document.createElement('div');
-  rowDiv.classList.add(`r-${row + 1}`);
+for (let col = 0; col < size; col++) {
+  const colDiv = document.createElement('div');
+  colDiv.classList.add(`col-${col + 1}`);
 
-  for (let col = 0; col < size; col++) {
+  for (let row = 0; row < size; row++) {
     const cellDiv = document.createElement('div');
     cellDiv.classList.add('cell');
     cellDiv.classList.add(isLightCell(row, col) ? 'light' : 'dark');
-    rowDiv.appendChild(cellDiv);
+    cellDiv.onclick = () => console.log(`Clicked on cell (${row}, ${col})`);
+    colDiv.appendChild(cellDiv);
   }
 
-  boardGame.appendChild(rowDiv);
+  boardGame.appendChild(colDiv);
 }

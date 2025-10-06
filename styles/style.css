@@ -68,6 +68,7 @@ main {
   font-size: 3rem;
   color: white;
   user-select: none;
+  cursor: pointer;
 }
 
 .cell.light {
