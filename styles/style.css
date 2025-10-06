@@ -3,6 +3,13 @@
   src: url("../fonts/UnifrakturCook-Bold.ttf");
 }
 
+:root {
+  --squire-size: 70px;
+  --primary-color: oklch(87.9% 0.169 91.605);
+  --primary-color-2: oklch(79.5% 0.184 86.047);
+  --secondary-color: oklch(29.1% 0.149 302.717);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -13,41 +20,78 @@
 button {
   all: unset;
   cursor: pointer;
+  user-select: none;
 }
 
 body {
-  background-color: oklch(37.4% 0.01 67.558);
+  background-color: var(--secondary-color);
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
 }
 
-header {
+.game-title {
   font-family: unifraktur-cook;
   font-weight: bold;
-  font-size: 5rem;
-  color: oklch(87.9% 0.169 91.605);
+  font-size: 10rem;
+  color: var(--primary-color);
   user-select: none;
-  height: 8rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 }
 
 main {
-  height: calc(100vh - 8rem);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 3rem;
 }
 
 #table {
-  width: 320px;
+  width: calc(var(--squire-size) * 8);
   aspect-ratio: 1 / 1;
   background: #000;
 }
 
+.btn-group {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  gap: 1rem;
+}
+
+.btn-group * {
+  font-family: unifraktur-cook;
+}
+
 .btn {
   padding: 1rem;
-  font-family: unifraktur-cook;
+  background: var(--primary-color-2);
+  font-size: 3rem;
+  border-radius: 1rem;
+}
+
+.btn:hover {
+  background: var(--primary-color);
+  transform: translateY(-0.2rem);
+}
+
+.toggle-questions {
+  position: absolute;
+  transform: translateX(150%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-questions input {
+  width: 2rem;
+  height: 2rem;
+}
+
+.toggle-questions span {
+  font-size: 2.5rem;
 }
