@@ -31,7 +31,7 @@ body {
   height: 100vh;
   display: flex;
   flex-direction: column;
-  gap: 4rem;
+  gap: 2rem;
 }
 
 .game-title {
@@ -48,25 +48,54 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  gap: 4rem;
 }
 
 #board-game {
-  --cell-size: 70px;
-  --grid-number: 8;
-  width: calc(var(--cell-size) * var(--grid-number));
+  width: calc(var(--cell-size) * var(--grid));
   aspect-ratio: 1 / 1;
+}
+
+.row {
+  width: 100%;
+  height: var(--cell-size);
   display: flex;
+  position: relative;
+}
+
+.row::before {
+  content: attr(data-row);
+  font-family: unifraktur-cook;
+  color: var(--primary-color);
+  font-size: 2rem;
+  width: 3rem;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  left: -2rem;
+  top: 10%;
+}
+
+.row[data-row='1'] .cell::before {
+  content: attr(data-letter);
+  font-family: unifraktur-cook;
+  color: var(--primary-color);
+  font-size: 2rem;
+  width: 3rem;
+  aspect-ratio: 1 / 1;
+  position: absolute;
+  bottom: -80%;
+  left: 40%;
 }
 
 .cell {
-  width: var(--cell-size);
-  aspect-ratio: 1 / 1;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: var(--cell-size);
+  aspect-ratio: 1 / 1;
   font-size: 3rem;
-  color: var(--primary-color);
+  color: var(--primary-color-2);
   font-family: unifraktur-cook;
   user-select: none;
   cursor: pointer;
