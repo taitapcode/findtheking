@@ -52,21 +52,22 @@ main {
 }
 
 #board-game {
-  --squire-size: 70px;
+  --cell-size: 70px;
   --grid-number: 8;
-  width: calc(var(--squire-size) * var(--grid-number));
+  width: calc(var(--cell-size) * var(--grid-number));
   aspect-ratio: 1 / 1;
   display: flex;
 }
 
 .cell {
-  width: var(--squire-size);
+  width: var(--cell-size);
   aspect-ratio: 1 / 1;
   display: flex;
   justify-content: center;
   align-items: center;
   font-size: 3rem;
-  color: white;
+  color: var(--primary-color);
+  font-family: unifraktur-cook;
   user-select: none;
   cursor: pointer;
 }
