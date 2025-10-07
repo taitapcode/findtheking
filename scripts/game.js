@@ -1,5 +1,6 @@
 const size = 8;
 const cellSize = 60;
+
 const boardGame = document.getElementById('board-game');
 const resetButton = document.getElementById('reset');
 const grid = Array.from({ length: size }, () => Array(size).fill(0)); // Generate the grid size x size filled with 0
@@ -82,7 +83,7 @@ for (let row = 0; row < size; row++) {
   const rowDiv = document.createElement('div');
 
   rowDiv.classList.add('row');
-  rowDiv.dataset.row = 8 - row;
+  rowDiv.dataset.row = size - row;
 
   for (let col = 0; col < size; col++) {
     const cellDiv = document.createElement('div');
