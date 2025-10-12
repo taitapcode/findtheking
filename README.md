@@ -26,8 +26,7 @@ FindTheKing is a web-based puzzle game that combines elements of chess positioni
 ## Technical Stack
 
 - **Frontend**: Vanilla HTML, CSS, and JavaScript
-- **Build Tool**: Vite with custom configuration
-- **Styling**: CSS with custom properties and Tailwind CSS integration
+- **Styling**: CSS with custom properties
 - **Font**: UnifrakturCook-Bold for medieval theming
 
 ## Project Structure
@@ -43,8 +42,6 @@ findtheking/
 ├── styles/
 │   └── style.css                  # Game styling and layout
 ├── index.html                     # Main HTML structure
-├── package.json                   # Dependencies and scripts
-├── vite.config.ts                 # Vite configuration
 └── README.md                      # Project documentation
 ```
 
@@ -68,6 +65,17 @@ The core game logic (`scripts/game.js`) includes:
 - 🚧 Questions feature (placeholder)
 - 🚧 Rules dialog functionality
 
+## Running the Game
+
+Since this is a vanilla JavaScript project without Node.js dependencies, you can run it by:
+
+1. **Direct file opening**: Simply open `index.html` in a web browser
+2. **Using Bun**: If you have Bun installed, you can serve it locally:
+
+   ```bash
+   bun index.html
+   ```
+
 ## Contributing
 
 The game is built with vanilla JavaScript for simplicity and educational purposes. Future enhancements could include:
@@ -81,4 +89,3 @@ The game is built with vanilla JavaScript for simplicity and educational purpose
 ## License
 
 This project is available for educational and personal use.
-
