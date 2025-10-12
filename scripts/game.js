@@ -124,8 +124,7 @@ for (let row = 0; row < size; row++) {
 
     cellDiv.classList.add('cell');
     cellDiv.classList.add(isLightCell(row, col) ? 'light' : 'dark');
-    cellDiv.dataset.col = col + 1;
-    cellDiv.dataset.letter = numberToLetter(col + 1);
+    if (row == size - 1) cellDiv.dataset.letter = numberToLetter(col + 1);
 
     cellDiv.addEventListener('click', () => onCellClick(row, col));
 
