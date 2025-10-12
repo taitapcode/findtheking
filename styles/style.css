@@ -177,11 +177,23 @@ dialog {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0);
   margin: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+dialog[open] {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
 }
 
 dialog::backdrop {
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.3s ease;
+}
+
+dialog[open]::backdrop {
   background: rgba(0, 0, 0, 0.7);
 }
 
@@ -193,6 +205,7 @@ dialog::backdrop {
   );
   border-radius: 1rem;
   overflow: hidden;
+  animation: modalSlideIn 0.3s ease-out;
 }
 
 .modal-header {
@@ -229,12 +242,13 @@ dialog::backdrop {
 }
 
 .close-btn:hover {
-  transform: scale(1.2);
+  transform: scale(1.2) rotate(90deg);
 }
 
 .modal-body {
   padding: 2rem;
   color: var(--secondary-color);
+  animation: fadeIn 0.4s ease-in 0.2s both;
 }
 
 .modal-body h3 {
@@ -263,7 +277,27 @@ dialog::backdrop {
 }
 
 .modal-body li {
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   line-height: 1.5;
   margin-bottom: 0.5rem;
+}
+
+@keyframes modalSlideIn {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

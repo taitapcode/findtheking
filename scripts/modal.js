@@ -1,11 +1,11 @@
 const modal = document.querySelector('dialog');
 const rulesButton = document.querySelector('.btn-group .btn:nth-child(2)');
 
-function openModal(content) {
+function openModal(content, title) {
   modal.innerHTML = `
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Luật Chơi</h2>
+        <h2>${title}</h2>
         <button class="close-btn" aria-label="Close modal">&times;</button>
       </div>
       <div class="modal-body">
@@ -27,7 +27,14 @@ function openModal(content) {
 }
 
 function closeModal() {
-  modal.close();
+  modal.style.transform = 'translate(-50%, -50%) scale(0)';
+  modal.style.opacity = '0';
+
+  setTimeout(() => {
+    modal.close();
+    modal.style.transform = '';
+    modal.style.opacity = '';
+  }, 300);
 }
 
 function showRules() {
@@ -47,7 +54,7 @@ function showRules() {
     <p>Vua có thể di chuyển một ô theo bất kỳ hướng nào (bao gồm cả đường chéo).</p>
   `;
 
-  openModal(rulesContent);
+  openModal(rulesContent, 'Luật chơi');
 }
 
 document.addEventListener('keydown', (e) => {
