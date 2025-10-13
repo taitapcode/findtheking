@@ -60,14 +60,14 @@ main {
   gap: 0.5rem;
 }
 
-#guesses {
+.guesses {
   font-family: unifraktur-cook;
   font-size: 3rem;
   color: white;
   user-select: none;
 }
 
-#board-game {
+.board-game {
   width: calc(var(--cell-size) * var(--grid));
   aspect-ratio: 1 / 1;
 }

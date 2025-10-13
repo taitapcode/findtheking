@@ -1,27 +1,12 @@
 const modal = document.querySelector('dialog');
-const rulesButton = document.querySelector('.btn-group .btn:nth-child(2)');
+const modalTitle = modal.querySelector('h2');
+const modalBody = modal.querySelector('.modal-body');
+const rulesButton = document.querySelector('.rules');
+const closeBtn = modal.querySelector('.close-btn');
 
 function openModal(content, title) {
-  modal.innerHTML = `
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>${title}</h2>
-        <button class="close-btn" aria-label="Close modal">&times;</button>
-      </div>
-      <div class="modal-body">
-        ${content}
-      </div>
-    </div>
-  `;
-
-  const closeBtn = modal.querySelector('.close-btn');
-  closeBtn.addEventListener('click', closeModal);
-
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-      closeModal();
-    }
-  });
+  modalTitle.textContent = title;
+  modalBody.innerHTML = content;
 
   modal.showModal();
 }
@@ -56,6 +41,14 @@ function showRules() {
 
   openModal(rulesContent, 'Luật chơi');
 }
+
+closeBtn.addEventListener('click', closeModal);
+
+modal.addEventListener('click', (e) => {
+  if (e.target === modal) {
+    closeModal();
+  }
+});
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && modal.open) {

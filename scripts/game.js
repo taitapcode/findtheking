@@ -4,9 +4,9 @@ const cellSize = 60;
 const totalGuesses = 5;
 
 // Initalize DOM elements and game state variables
-const boardGame = document.getElementById('board-game');
-const guessesDisplay = document.getElementById('guesses');
-const resetButton = document.getElementById('reset');
+const boardGame = document.querySelector('.board-game');
+const guessesDisplay = document.querySelector('.guesses');
+const resetButton = document.querySelector('.reset');
 const modal = document.querySelector('dialog');
 const grid = Array.from({ length: size }, () => Array(size).fill(0)); // Generate the grid size x size filled with 0
 

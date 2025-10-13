@@ -5,27 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FindTheKing</title>
     <link rel="stylesheet" href="./styles/style.css" />
-
-    <script defer src="./scripts/question.js"></script>
-    <script defer src="./scripts/game.js"></script>
-    <script defer src="./scripts/modal.js"></script>
   </head>
   <body>
     <span class="game-title">FindTheKing</span>
     <main>
       <div class="game-container">
-        <span id="guesses"></span>
-        <div id="board-game"></div>
+        <span class="guesses"></span>
+        <div class="board-game"></div>
       </div>
       <div class="btn-group">
-        <button id="reset" class="btn">Reset</button>
-        <button class="btn">Rules</button>
+        <button class="reset btn">Reset</button>
+        <button class="rules btn">Rules</button>
         <div class="toggle-questions">
-          <input type="checkbox" id="toggleQuestions" />
+          <input type="checkbox" class="toggleQuestions" />
           <span>Quesions</span>
         </div>
       </div>
     </main>
-    <dialog></dialog>
+
+    <dialog>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2></h2>
+          <button class="close-btn" aria-label="Close modal">&times;</button>
+        </div>
+        <div class="modal-body"></div>
+      </div>
+    </dialog>
+
+    <script src="./scripts/question.js"></script>
+    <script src="./scripts/game.js"></script>
+    <script src="./scripts/modal.js"></script>
   </body>
 </html>
