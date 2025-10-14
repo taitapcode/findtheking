@@ -7,7 +7,6 @@ const totalGuesses = 5;
 const boardGame = document.querySelector('.board-game');
 const guessesDisplay = document.querySelector('.guesses');
 const resetButton = document.querySelector('.reset');
-const modal = document.querySelector('dialog');
 const grid = Array.from({ length: size }, () => Array(size).fill(0)); // Generate the grid size x size filled with 0
 
 let isStarted = false;

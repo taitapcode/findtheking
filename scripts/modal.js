@@ -1,4 +1,4 @@
-const modal = document.querySelector('dialog');
+const modal = document.querySelector('.modal');
 const modalTitle = modal.querySelector('h2');
 const modalBody = modal.querySelector('.modal-body');
 const rulesButton = document.querySelector('.rules');
@@ -43,12 +43,6 @@ function showRules() {
 }
 
 closeBtn.addEventListener('click', closeModal);
-
-modal.addEventListener('click', (e) => {
-  if (e.target === modal) {
-    closeModal();
-  }
-});
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && modal.open) {
