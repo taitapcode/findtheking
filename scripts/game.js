@@ -7,6 +7,7 @@ const totalGuesses = 5;
 const boardGame = document.querySelector('.board-game');
 const guessesDisplay = document.querySelector('.guesses');
 const resetButton = document.querySelector('.reset');
+const toggleQuestions = document.querySelector('.toggleQuestions');
 const grid = Array.from({ length: size }, () => Array(size).fill(0)); // Generate the grid size x size filled with 0
 
 let isStarted = false;
@@ -14,6 +15,25 @@ let isReady = true;
 let isWin = false;
 let king = [-1, -1];
 let currentGuess = 0;
+let isAwaitingAnswer = false;
+
+let questionsEnabled = true;
+
+if (toggleQuestions) {
+  toggleQuestions.checked = true;
+  questionsEnabled = toggleQuestions.checked;
+
+  toggleQuestions.addEventListener('change', () => {
+    questionsEnabled = toggleQuestions.checked;
+    if (!questionsEnabled && isAwaitingAnswer) {
+      isAwaitingAnswer = false;
+      const modal = document.querySelector('.modal');
+      if (modal) modal.dataset.locked = 'false';
+      if (typeof closeModal === 'function') closeModal(true);
+    }
+    updateGuessesDisplay();
+  });
+}
 
 // Determines if a cell should be light colored based on chessboard pattern
 function isLightCell(row, col) {
@@ -64,23 +84,45 @@ function updateGuessesDisplay() {
 
 // Handle cell click events
 function onCellClick(row, col) {
-  if (!isReady) return;
+  if (!isReady || isAwaitingAnswer) return;
 
-  if (!isStarted) {
-    resetGame();
-    isStarted = true;
-    spawnKingRandomly(row, col);
-  }
+  const handleGuess = () => {
+    if (!isStarted) {
+      resetGame();
+      isStarted = true;
+      spawnKingRandomly(row, col);
+    }
 
-  if (!grid[row][col]) {
-    currentGuess++;
-    grid[row][col] = 1;
-    const distance = shortestPath([row, col], king, true);
-    labelCell(row, col, distance, king);
+    if (!grid[row][col]) {
+      currentGuess++;
+      grid[row][col] = 1;
+      const distance = shortestPath([row, col], king);
+      labelCell(row, col, distance, true);
 
-    updateGuessesDisplay();
-    if (currentGuess >= totalGuesses || distance == 0) endState();
-    // else
+      updateGuessesDisplay();
+      if (currentGuess >= totalGuesses || distance === 0) endState();
+    }
+  };
+
+  const shouldAskQuestion =
+    questionsEnabled &&
+    window.questionManager &&
+    typeof window.questionManager.askQuestion === 'function';
+
+  if (shouldAskQuestion) {
+    isAwaitingAnswer = true;
+    window.questionManager
+      .askQuestion()
+      .then(() => {
+        isAwaitingAnswer = false;
+        handleGuess();
+      })
+      .catch(() => {
+        isAwaitingAnswer = false;
+        handleGuess();
+      });
+  } else {
+    handleGuess();
   }
 }
 
@@ -89,6 +131,7 @@ function resetGame() {
   isWin = false;
   isStarted = false;
   currentGuess = 0;
+  isAwaitingAnswer = false;
   const cells = Array.from(boardGame.getElementsByClassName('cell'));
 
   grid.forEach((row) => row.fill(0));

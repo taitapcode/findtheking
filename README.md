@@ -20,6 +20,8 @@ FindTheKing is a web-based puzzle game that combines elements of chess positioni
 - **Chess Notation**: Board includes row numbers (1-8) and column letters (a-h)
 - **Distance Feedback**: Visual feedback showing the minimum moves needed to reach the king
 - **Game State Management**: Track remaining guesses and win/lose states
+- **Question Challenge**: Each click surfaces a trivia prompt that must be answered to reveal the clue
+- **Question Toggle**: Disable trivia from the control panel to play uninterrupted
 - **Reset Functionality**: Start a new game at any time
 - **Medieval Theme**: Custom UnifrakturCook font and gradient background for atmospheric styling
 
@@ -61,9 +63,9 @@ The core game logic (`scripts/game.js`) includes:
 - ✅ Chessboard rendering and styling
 - ✅ Distance calculation and feedback
 - ✅ Game state management
-- 🚧 Modal system (placeholder)
-- 🚧 Questions feature (placeholder)
-- 🚧 Rules dialog functionality
+- ✅ Question challenge modal
+- ✅ Modal system polish
+- ✅ Rules dialog functionality
 
 ## Running the Game
 

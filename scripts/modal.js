@@ -7,11 +7,18 @@ const closeBtn = modal.querySelector('.close-btn');
 function openModal(content, title) {
   modalTitle.textContent = title;
   modalBody.innerHTML = content;
-
-  modal.showModal();
+  modal.dataset.locked = 'false';
+  if (!modal.open) {
+    modal.showModal();
+  } else {
+    modal.style.transform = 'translate(-50%, -50%) scale(1)';
+    modal.style.opacity = '1';
+  }
 }
 
-function closeModal() {
+function closeModal(force = false) {
+  if (modal.dataset.locked === 'true' && !force) return;
+
   modal.style.transform = 'translate(-50%, -50%) scale(0)';
   modal.style.opacity = '0';
 
@@ -19,6 +26,7 @@ function closeModal() {
     modal.close();
     modal.style.transform = '';
     modal.style.opacity = '';
+    modal.dataset.locked = 'false';
   }, 300);
 }
 
@@ -42,7 +50,7 @@ function showRules() {
   openModal(rulesContent, 'Luật chơi');
 }
 
-closeBtn.addEventListener('click', closeModal);
+closeBtn.addEventListener('click', () => closeModal());
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape' && modal.open) {
