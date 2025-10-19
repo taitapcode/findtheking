@@ -73,15 +73,17 @@ function askQuestion() {
           'Hết câu hỏi',
         );
         hasNotifiedDepleted = true;
-      }
 
-      const modal = document.querySelector('.modal');
-      if (modal) {
-        modal.dataset.locked = 'false';
-        setTimeout(() => {
-          if (typeof closeModal === 'function') closeModal(true);
+        const modal = document.querySelector('.modal');
+        if (modal) {
+          modal.dataset.locked = 'false';
+          setTimeout(() => {
+            if (typeof closeModal === 'function') closeModal(true);
+            resolve(true);
+          }, 1000);
+        } else {
           resolve(true);
-        }, 1000);
+        }
       } else {
         resolve(true);
       }
