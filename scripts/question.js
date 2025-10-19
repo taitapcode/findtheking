@@ -38,13 +38,33 @@ const questions = [
   },
 ];
 
+const answeredQuestionIndices = new Set();
+
+function getRandomQuestionIndex() {
+  if (answeredQuestionIndices.size === questions.length) {
+    answeredQuestionIndices.clear();
+  }
+
+  const availableIndices = [];
+  for (let index = 0; index < questions.length; index += 1) {
+    if (!answeredQuestionIndices.has(index)) availableIndices.push(index);
+  }
+
+  const randomPosition = Math.floor(Math.random() * availableIndices.length);
+  return availableIndices[randomPosition];
+}
+
 function getRandomQuestion() {
-  return questions[Math.floor(Math.random() * questions.length)];
+  const index = getRandomQuestionIndex();
+  return {
+    index,
+    question: questions[index],
+  };
 }
 
 function askQuestion() {
   return new Promise((resolve) => {
-    const question = getRandomQuestion();
+    const { index: questionIndex, question } = getRandomQuestion();
     const modal = document.querySelector('.modal');
     const optionsMarkup = question.options
       .map(
@@ -53,7 +73,7 @@ function askQuestion() {
             <input type="radio" name="questionAnswer" value="${index}" required />
             <span>${option}</span>
           </label>
-        `,
+        `
       )
       .join('');
 
@@ -92,6 +112,7 @@ function askQuestion() {
             feedback.textContent = 'Chính xác! Hãy tiếp tục săn tìm vua nào';
             feedback.classList.remove('error');
             modal.dataset.locked = 'false';
+            answeredQuestionIndices.add(questionIndex);
             setTimeout(() => {
               if (typeof closeModal === 'function') closeModal(true);
               resolve(true);
