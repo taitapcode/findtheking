@@ -41,9 +41,7 @@ const questions = [
 const answeredQuestionIndices = new Set();
 
 function getRandomQuestionIndex() {
-  if (answeredQuestionIndices.size === questions.length) {
-    answeredQuestionIndices.clear();
-  }
+  if (answeredQuestionIndices.size === questions.length) return null;
 
   const availableIndices = [];
   for (let index = 0; index < questions.length; index += 1) {
@@ -56,6 +54,8 @@ function getRandomQuestionIndex() {
 
 function getRandomQuestion() {
   const index = getRandomQuestionIndex();
+  if (index === null) return null;
+
   return {
     index,
     question: questions[index],
@@ -64,7 +64,30 @@ function getRandomQuestion() {
 
 function askQuestion() {
   return new Promise((resolve) => {
-    const { index: questionIndex, question } = getRandomQuestion();
+    const payload = getRandomQuestion();
+    if (!payload) {
+      if (typeof openModal === 'function') {
+        openModal(
+          '<p class="question-text">Bạn đã trả lời hết mọi câu hỏi sẵn có rồi. Hãy tiếp tục truy lùng nhà vua thôi!</p>',
+          'Hết câu hỏi',
+        );
+      }
+
+      const modal = document.querySelector('.modal');
+      if (modal) {
+        modal.dataset.locked = 'false';
+        setTimeout(() => {
+          if (typeof closeModal === 'function') closeModal(true);
+          resolve(true);
+        }, 1000);
+      } else {
+        resolve(true);
+      }
+      return;
+    }
+
+    const { index: questionIndex, question } = payload;
+    answeredQuestionIndices.add(questionIndex);
     const modal = document.querySelector('.modal');
     const optionsMarkup = question.options
       .map(
@@ -73,7 +96,7 @@ function askQuestion() {
             <input type="radio" name="questionAnswer" value="${index}" required />
             <span>${option}</span>
           </label>
-        `
+        `,
       )
       .join('');
 
@@ -83,8 +106,6 @@ function askQuestion() {
         <div class="question-options">
           ${optionsMarkup}
         </div>
-        <button type="submit" class="btn submit-answer">Xác nhận</button>
-        <p class="question-feedback" aria-live="polite"></p>
       </form>
     `;
 
@@ -95,33 +116,52 @@ function askQuestion() {
     if (modal) {
       modal.dataset.locked = 'true';
       const form = modal.querySelector('.question-form');
-      const feedback = modal.querySelector('.question-feedback');
+      const closeDelay = 1000;
+
+      const handleSelection = (selected) => {
+        const selectedInput = form.querySelector(
+          `input[name="questionAnswer"][value="${selected}"]`,
+        );
+        const selectedOption = selectedInput
+          ? selectedInput.closest('.question-option')
+          : null;
+        const correctInput = form.querySelector(
+          `input[name="questionAnswer"][value="${question.answerIndex}"]`,
+        );
+        const correctOption = correctInput
+          ? correctInput.closest('.question-option')
+          : null;
+
+        form
+          .querySelectorAll('input[name="questionAnswer"]')
+          .forEach((input) => {
+            input.disabled = true;
+          });
+
+        const isCorrect = Number(selected) === question.answerIndex;
+
+        if (selectedOption) {
+          selectedOption.classList.add(isCorrect ? 'correct' : 'incorrect');
+        }
+        if (!isCorrect && correctOption) {
+          correctOption.classList.add('correct');
+        }
+
+        modal.dataset.locked = 'false';
+        setTimeout(() => {
+          if (typeof closeModal === 'function') closeModal(true);
+          resolve(isCorrect);
+        }, closeDelay);
+      };
 
       if (form) {
-        form.addEventListener('submit', (event) => {
-          event.preventDefault();
-          const data = new FormData(form);
-          const selected = data.get('questionAnswer');
-
-          if (selected === null) {
-            feedback.textContent = 'Hãy chọn đáp án';
-            return;
-          }
-
-          if (Number(selected) === question.answerIndex) {
-            feedback.textContent = 'Chính xác! Hãy tiếp tục săn tìm vua nào';
-            feedback.classList.remove('error');
-            modal.dataset.locked = 'false';
-            answeredQuestionIndices.add(questionIndex);
-            setTimeout(() => {
-              if (typeof closeModal === 'function') closeModal(true);
-              resolve(true);
-            }, 400);
-          } else {
-            feedback.textContent = 'Chưa chuẩn lắm. Thử lại nào';
-            feedback.classList.add('error');
-          }
-        });
+        form
+          .querySelectorAll('input[name="questionAnswer"]')
+          .forEach((input) => {
+            input.addEventListener('change', () => {
+              handleSelection(input.value);
+            });
+          });
       }
     } else {
       resolve(true);

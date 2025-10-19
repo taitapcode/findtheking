@@ -322,9 +322,26 @@ dialog[open]::backdrop {
   padding: 0.75rem 1rem;
   background: rgba(255, 255, 255, 0.12);
   border-radius: 0.75rem;
+  border: 1px solid transparent;
   transition:
     background 0.2s ease,
     transform 0.2s ease;
+}
+
+.question-option.correct,
+.question-option.correct:hover {
+  background: rgba(46, 204, 113, 0.18);
+  border-color: #2ecc71;
+  color: #1f8f55;
+  pointer-events: none;
+}
+
+.question-option.incorrect,
+.question-option.incorrect:hover {
+  background: rgba(231, 76, 60, 0.18);
+  border-color: #e74c3c;
+  color: #b8322a;
+  pointer-events: none;
 }
 
 .question-option input {
@@ -338,38 +355,6 @@ dialog[open]::backdrop {
   transform: translateY(-0.1rem);
   cursor: pointer;
 }
-
-.submit-answer {
-  align-self: flex-end;
-  padding: 0.75rem 1.5rem;
-  font-size: 1.5rem;
-  background: var(--secondary-color);
-  color: var(--primary-color);
-  border-radius: 0.75rem;
-  border: 1px solid transparent;
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.submit-answer:hover {
-  transform: translateY(-0.15rem);
-  color: var(--secondary-color);
-  border-color: var(--secondary-color);
-  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.25);
-}
-
-.question-feedback {
-  min-height: 1.5rem;
-  font-size: 1.2rem;
-  color: var(--secondary-color);
-  text-align: center;
-}
-
-.question-feedback.error {
-  color: oklch(62.5% 0.2 25);
-}
-
 @keyframes modalSlideIn {
   0% {
     transform: translateY(-20px);
