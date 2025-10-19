@@ -8,16 +8,22 @@ const boardGame = document.querySelector('.board-game');
 const guessesDisplay = document.querySelector('.guesses');
 const resetButton = document.querySelector('.reset');
 const toggleQuestions = document.querySelector('.toggleQuestions');
+const timerDisplay = document.querySelector('.round-timer__value');
+const roundDurationSeconds = 150;
+
 const grid = Array.from({ length: size }, () => Array(size).fill(0)); // Generate the grid size x size filled with 0
 
 let isStarted = false;
 let isReady = true;
 let isWin = false;
+let isTimeUp = false;
 let king = [-1, -1];
 let currentGuess = 0;
 let isAwaitingAnswer = false;
 
 let questionsEnabled = true;
+let timerId = null;
+let timeRemaining = roundDurationSeconds;
 
 if (toggleQuestions) {
   toggleQuestions.checked = true;
@@ -51,6 +57,54 @@ function shortestPath(cell, king) {
   return Math.max(Math.abs(cell[0] - king[0]), Math.abs(cell[1] - king[1]));
 }
 
+function formatTime(seconds) {
+  const minutes = Math.floor(seconds / 60);
+  const secs = seconds % 60;
+  return `${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+}
+
+function updateTimerDisplay() {
+  if (timerDisplay) timerDisplay.textContent = formatTime(timeRemaining);
+}
+
+function stopTimer() {
+  if (timerId !== null) {
+    clearInterval(timerId);
+    timerId = null;
+  }
+}
+
+function resetTimer() {
+  stopTimer();
+  timeRemaining = roundDurationSeconds;
+  updateTimerDisplay();
+}
+
+function startTimerCountdown() {
+  if (timerId !== null) return;
+  timerId = setInterval(() => {
+    timeRemaining -= 1;
+    if (timeRemaining <= 0) {
+      timeRemaining = 0;
+      updateTimerDisplay();
+      stopTimer();
+      handleTimeExpired();
+    } else updateTimerDisplay();
+  }, 1000);
+}
+
+function handleTimeExpired() {
+  if (!isReady || isTimeUp || isWin) return;
+  isAwaitingAnswer = false;
+  const modal = document.querySelector('.modal');
+  if (modal) {
+    modal.dataset.locked = 'false';
+    if (typeof closeModal === 'function') closeModal(true);
+  }
+  isTimeUp = true;
+  endState();
+}
+
 // Label the cell with the distance or a king icon if distance is 0 when clicked
 function labelCell(row, col, distance, userClick = false) {
   const rowDiv = boardGame.getElementsByClassName('row')[row];
@@ -76,6 +130,7 @@ function updateGuessesDisplay() {
   let guessText;
 
   if (isWin) guessText = 'You Win!';
+  else if (isTimeUp) guessText = "Time's up!";
   else if (guessesLeft <= 0) guessText = 'You Lose!';
   else guessText = `Guesses left: ${guessesLeft}`;
 
@@ -86,13 +141,14 @@ function updateGuessesDisplay() {
 function onCellClick(row, col) {
   if (!isReady || isAwaitingAnswer) return;
 
-  const handleGuess = () => {
-    if (!isStarted) {
-      resetGame();
-      isStarted = true;
-      spawnKingRandomly(row, col);
-    }
+  if (!isStarted) {
+    resetGame();
+    isStarted = true;
+    spawnKingRandomly(row, col);
+    startTimerCountdown();
+  }
 
+  const handleGuess = () => {
     if (!grid[row][col]) {
       currentGuess++;
       grid[row][col] = 1;
@@ -127,11 +183,14 @@ function onCellClick(row, col) {
 }
 
 function resetGame() {
+  resetTimer();
   isReady = true;
   isWin = false;
+  isTimeUp = false;
   isStarted = false;
   currentGuess = 0;
   isAwaitingAnswer = false;
+  king = [-1, -1];
   const cells = Array.from(boardGame.getElementsByClassName('cell'));
 
   grid.forEach((row) => row.fill(0));
@@ -142,8 +201,9 @@ function resetGame() {
 
 // End the game state
 function endState() {
+  stopTimer();
   isReady = false;
-  labelCell(king[0], king[1], 0);
+  if (king[0] >= 0 && king[1] >= 0) labelCell(king[0], king[1], 0);
   updateGuessesDisplay();
   resetButton.textContent = 'Again';
 }
@@ -152,7 +212,8 @@ function endState() {
 boardGame.style.setProperty('--grid', size);
 boardGame.style.setProperty('--cell-size', cellSize + 'px');
 
-// Initial display of guesses
+// Initial display setup
+resetTimer();
 updateGuessesDisplay();
 
 // Render the chessboard

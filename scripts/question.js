@@ -39,6 +39,7 @@ const questions = [
 ];
 
 const answeredQuestionIndices = new Set();
+let hasNotifiedDepleted = false;
 
 function getRandomQuestionIndex() {
   if (answeredQuestionIndices.size === questions.length) return null;
@@ -66,11 +67,12 @@ function askQuestion() {
   return new Promise((resolve) => {
     const payload = getRandomQuestion();
     if (!payload) {
-      if (typeof openModal === 'function') {
+      if (!hasNotifiedDepleted && typeof openModal === 'function') {
         openModal(
           '<p class="question-text">Bạn đã trả lời hết mọi câu hỏi sẵn có rồi. Hãy tiếp tục truy lùng nhà vua thôi!</p>',
           'Hết câu hỏi',
         );
+        hasNotifiedDepleted = true;
       }
 
       const modal = document.querySelector('.modal');
