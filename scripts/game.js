@@ -1,6 +1,6 @@
 // Initial game settings
 const size = 8;
-const cellSize = 60;
+const cellSize = 55;
 const totalGuesses = 5;
 
 // Initalize DOM elements and game state variables

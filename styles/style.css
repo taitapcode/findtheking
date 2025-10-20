@@ -38,7 +38,7 @@ body {
 .game-title {
   font-family: unifraktur-cook;
   font-weight: bold;
-  font-size: 9rem;
+  font-size: 7.5rem;
   color: var(--primary-color);
   user-select: none;
   text-align: center;
@@ -59,7 +59,6 @@ main {
   align-items: center;
   gap: 0.5rem;
 }
-
 
 .board-wrapper {
   position: relative;
