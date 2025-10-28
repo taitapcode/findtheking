@@ -14,38 +14,9 @@ FindTheKing is a web-based puzzle game that combines elements of chess positioni
 4. **Win Condition**: Click on the exact square where the king is hidden
 5. **King's Movement**: Distance is calculated using king movement rules (can move one square in any direction, including diagonally)
 
-## Features
+## About This Project
 
-- **8×8 Chessboard**: Classic chessboard layout with alternating light and dark squares
-- **Chess Notation**: Board includes row numbers (1-8) and column letters (a-h)
-- **Distance Feedback**: Visual feedback showing the minimum moves needed to reach the king
-- **Game State Management**: Track remaining guesses and win/lose states
-- **Question Challenge**: Each click surfaces a trivia prompt that must be answered to reveal the clue
-- **Question Toggle**: Disable trivia from the control panel to play uninterrupted
-- **Reset Functionality**: Start a new game at any time
-- **Medieval Theme**: Custom UnifrakturCook font and gradient background for atmospheric styling
-
-## Technical Stack
-
-- **Frontend**: Vanilla HTML, CSS, and JavaScript
-- **Styling**: CSS with custom properties
-- **Font**: UnifrakturCook-Bold for medieval theming
-
-## Project Structure
-
-```
-findtheking/
-├── fonts/
-│   └── UnifrakturCook-Bold.ttf    # Custom medieval font
-├── scripts/
-│   ├── game.js                    # Core game logic and board rendering
-│   ├── modal.js                   # Modal functionality (placeholder)
-│   └── question.js                # Questions feature (placeholder)
-├── styles/
-│   └── style.css                  # Game styling and layout
-├── index.html                     # Main HTML structure
-└── README.md                      # Project documentation
-```
+This is **vibe code** - a fun, experimental project built for the joy of coding and exploration rather than production use. The project embodies the philosophy of creative, rapid development where the journey of building is just as important as the destination. This project was primarily **generated using AI assistance** (specifically OpenCode/Claude), demonstrating how AI can be used as a creative coding partner.
 
 ## Game Logic
 
@@ -57,16 +28,6 @@ The core game logic (`scripts/game.js`) includes:
 - **Game State**: Manages guesses, win/lose conditions, and board state
 - **Visual Feedback**: Updates cells with distance numbers or king icon
 
-## Development Status
-
-- ✅ Core game functionality
-- ✅ Chessboard rendering and styling
-- ✅ Distance calculation and feedback
-- ✅ Game state management
-- ✅ Question challenge modal
-- ✅ Modal system polish
-- ✅ Rules dialog functionality
-
 ## Running the Game
 
 Since this is a vanilla JavaScript project without Node.js dependencies, you can run it by:
@@ -77,16 +38,6 @@ Since this is a vanilla JavaScript project without Node.js dependencies, you can
    ```bash
    bun index.html
    ```
-
-## Contributing
-
-The game is built with vanilla JavaScript for simplicity and educational purposes. Future enhancements could include:
-
-- Rules modal implementation
-- Question/hint system
-- Difficulty levels with different board sizes
-- Score tracking and statistics
-- Sound effects and animations
 
 ## License
 
