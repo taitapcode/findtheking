@@ -1,4 +1,4 @@
-# FindTheKing
+# FindTheKing VibeCode
 
 A strategic chess-inspired guessing game where players attempt to locate a hidden king on a chessboard within a limited number of moves.
 
